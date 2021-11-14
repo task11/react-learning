@@ -45,7 +45,7 @@ class App extends Component {
       _article = <ReadContent title={_title} desc={_desc}></ReadContent>;
     }else if(this.state.mode === 'create'){
       _article = <CreateContent onSubmit={function(_title, _desc){
-        // add News contents
+        // Add New contents
         this.maxContentId = this.maxContentId + 1;
         
         var _contents = this.state.contents.concat(
