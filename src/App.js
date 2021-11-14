@@ -1,13 +1,16 @@
 import React, {Component} from 'react';
 import './App.css';
 import TOC from "./components/TOC";
-import Content from './components/Content';
+import ReadContent from './components/ReadContent';
 import Subject from './components/Subject';
 import Control from './components/Control';
+import CreateContent from './components/CreateContent'
+import UpdateContent from './components/UpdateContent';
 
 class App extends Component {
   constructor(props){
     super(props);
+    this.maxContentId = 3;
     this.state = {
       mode: "read",
       selectedContentId: 2,
@@ -23,10 +26,11 @@ class App extends Component {
   }
 
   render () {
-    var _title, _desc = null;
+    var _title, _desc, _article = null;
     if(this.state.mode === 'welcome'){
       _title = this.state.welcom.title;
       _desc = this.state.welcom.desc;
+      _article = <ReadContent title={_title} desc={_desc}></ReadContent>;
     }else if(this.state.mode === 'read'){
       var i = 0; // 필터로 바꿔보기
       while( i < this.state.contents.length){
@@ -38,6 +42,23 @@ class App extends Component {
         }
         i = i + 1;
       }
+      _article = <ReadContent title={_title} desc={_desc}></ReadContent>;
+    }else if(this.state.mode === 'create'){
+      _article = <CreateContent onSubmit={function(_title, _desc){
+        // add News contents
+        this.maxContentId = this.maxContentId + 1;
+        
+        var _contents = this.state.contents.concat(
+          {id: this.maxContentId, title: _title, desc: _desc}
+        );
+
+        this.setState({
+          contents: _contents
+        });
+
+      }.bind(this)}></CreateContent>;
+    }else if(this.state.mode === 'update'){
+      _article = <UpdateContent></UpdateContent>;
     }
 
     return (
@@ -64,7 +85,8 @@ class App extends Component {
             mode: mode
           })
         }.bind(this)}></Control>
-        <Content title={_title} desc={_desc}></Content>
+        {_article}
+        
       </div>
     );
   }
