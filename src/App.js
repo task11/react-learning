@@ -3,6 +3,7 @@ import './App.css';
 import TOC from "./components/TOC";
 import Content from './components/Content';
 import Subject from './components/Subject';
+import Control from './components/Control';
 
 class App extends Component {
   constructor(props){
@@ -51,14 +52,14 @@ class App extends Component {
           }.bind(this)}
         >
         </Subject>
-
+        
         <TOC onChangePage={function(id){
           this.setState({
             mode: "read",
             selectedContentId: Number(id)
           });
         }.bind(this) } data={this.state.contents}></TOC>
-        
+        <Control></Control>
         <Content title={_title} desc={_desc}></Content>
       </div>
     );
