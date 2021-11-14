@@ -12,7 +12,7 @@ class App extends Component {
     super(props);
     this.maxContentId = 3;
     this.state = {
-      mode: "read",
+      mode: "welcome",
       selectedContentId: 2,
       subject: {title: "HaveANiceDay!", sub: "Enjoy your Life"},
       welcom: {title: "Welcome", desc: "Hello, JH!"},
@@ -104,14 +104,36 @@ class App extends Component {
         
         <TOC onChangePage={function(id){
           this.setState({
-            mode: "read",
-            selectedContentId: Number(id)
-          });
-        }.bind(this) } data={this.state.contents}></TOC>
-        <Control onChangeMode={function(mode){
-          this.setState({
-            mode: mode
-          })
+              mode: "read",
+              selectedContentId: Number(id)
+            });
+          }.bind(this) }
+          data={this.state.contents}>
+
+        </TOC>
+        <Control onChangeMode={function(_mode){
+          if(_mode === "delete"){
+            if(window.confirm("정말 삭제하시겠습니까?")){
+              var _contents = Array.from(this.state.contents);
+              var i = 0;
+              while(i < this.state.contents.length){
+                if(_contents[i].id === this.state.selectedContentId){
+                  _contents.splice(i,1); // 배열의 id 값 한칸
+                  break;
+                }
+                i = i + 1;
+              }
+              this.setState({
+                mode: "welcome",
+                contents: _contents
+              });
+              alert("삭제가 완료되었습니다.");
+            }
+          } else {
+            this.setState({
+              mode: _mode
+            });
+          }
         }.bind(this)}></Control>
         {this.getContent()}
         
