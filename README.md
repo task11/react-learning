@@ -1,4 +1,3 @@
-# React Learning for CRUD
-
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# React Learning for CRUD : 리액트를 배
+## React 를 활용한 내부 CRUD 기능 구현
 
